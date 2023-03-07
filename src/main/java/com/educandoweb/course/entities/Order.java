@@ -11,39 +11,36 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.educandoweb.course.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-//criando a nossa CLASSE/ENTIDADE PEDIDOS/ORDER
 @Entity
 @Table(name = "tb_order")
 public class Order implements Serializable{
 	private static final long serialVersionUID = 1L;
 
-	//implementando os ATRIBUTOS/VARIAVEIS basicas... do PEDIDO
-	//colocando o @ID para dizer q o ID e a chave primeria
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
 	
-		//declarando uma VARIAVEL CLIENT do tipo USER... Para sabermos qual é o 
-		//USUARIO/CLIENTE q esta fazendo o PEDIDO
-	//colocando a ANNOTATION MANYTOONE... Pois é MUITOS (ORDER/PEDIDO) para UM CLIENTE/USER
+	private Integer orderStatus;
+	
+
 	@ManyToOne
-	//Annotation JoinColumn recebe a CHAVE ESTRANGEIRA q tera no BANCO q é o ID do cliente
-	//q fez o PEDIDO
 	@JoinColumn(name = "client_id")
 	private User client;
-	
-	
+
 	public Order() {}
 
 
-	public Order(Long id, Instant moment, User client) {
+	public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
 		super();
 		this.id = id;
 		this.moment = moment;
+		setOrderStatus(orderStatus);
 		this.client = client;
 	}
 	
@@ -65,6 +62,17 @@ public class Order implements Serializable{
 	public void setMoment(Instant moment) {
 		this.moment = moment;
 	}
+	
+	public OrderStatus getOrderStatus() {
+		return OrderStatus.valueOf(orderStatus);
+	}
+
+
+	public void setOrderStatus(OrderStatus orderStatus) {
+		if(orderStatus != null) {
+			this.orderStatus = orderStatus.getCode();
+		}
+	}
 
 
 	public User getClient() {
@@ -75,9 +83,7 @@ public class Order implements Serializable{
 	public void setClient(User client) {
 		this.client = client;
 	}
-
 	
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -102,5 +108,8 @@ public class Order implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}	
+	}
+	
+	
+	
 }

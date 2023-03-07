@@ -13,11 +13,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-//criando a CLASSE/entidade USER... com a INTERFACE SERIALIZABLE... Q serve para transformar
-//OBJETOS em CADEIA de BYTES... Isso serve para trafegar DADOS na rede...
-//
-//@ENTITY diz q vai ser CRIADO UMA TABLE NO BANCO COM O MESMO NOME Q A CLASS
-//NO CASO USER...
+
 @Entity
 
 @Table(name = "tb_user")
@@ -33,21 +29,15 @@ public class User implements Serializable {
 	private String password;
 	
 	@JsonIgnore
-	//Colocando a ANOTATION ONETOMANY.... 1 para MUITOS... Assim ao acessarmos um CLIENTE
-	//podemos ver TODOS os PEDIDOS feito por 1 USUARIO, e entre PARENTESES nos dizemos q
-	//no ORDER ele ta MAPEADO como CLIENT, assim nos vamos PEGAR TODOS os ORDER q sao do
-	//mesmo CLIENT
+
 	@OneToMany(mappedBy = "client")
-	//aqui estamos declarando uma LISTA de ORDER/PEDIDO... OU SEJA um USUARIO pode
-	//ter VARIOS PEDIDOS... essa lista de pedido vamos chamar ela de ORDERS
-		//e colocamos um NEW ARRAYLIST para iniciar essa lista
+
 	private List<Order> orders = new ArrayList<>();
 	
 	
 	public User() {	
 	}
 
- 
 	public User(Long id, String name, String email, String phone, String password) {
 		super();
 		this.id = id;
@@ -57,7 +47,6 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	
 	public Long getId() {
 		return id;
 	}
@@ -106,9 +95,10 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
-	
+
+
+
+
 	public List<Order> getOrders() {
 		return orders;
 	}
@@ -122,7 +112,6 @@ public class User implements Serializable {
 		return result;
 	}
 
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -138,13 +127,5 @@ public class User implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-
-
-	
-	
-	
-	
-	
+	}	
 }
