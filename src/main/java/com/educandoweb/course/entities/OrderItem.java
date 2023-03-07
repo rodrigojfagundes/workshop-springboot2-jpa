@@ -9,15 +9,12 @@ import javax.persistence.Table;
 import com.educandoweb.course.entities.pk.OrderItemPK;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-//classe ORDERITEM/ITEM DE PEDIDO, q tem quantidade e preco e TBM uma 
-//associacao com as classes PRODUTO e PEDIDO
-
-	//fazendo o MAPEAMENTO... o @ENTITY e para dizer q vamos CRIAR UMA TABELA
-	//com o NOME dessa CLASSE (ORDERITEM) no BANCO...
 @Entity
+
 @Table(name = "tb_order_item")
 public class OrderItem implements Serializable {
 	private static final long serialVersionUID = 1L;
+
 	@EmbeddedId
 	private OrderItemPK id = new OrderItemPK();
 
@@ -29,6 +26,7 @@ public class OrderItem implements Serializable {
 
 	public OrderItem(Order order, Product product, Integer quantity, Double price) {
 		super();
+
 		id.setOrder(order);
 		id.setProduct(product);
 
@@ -68,6 +66,7 @@ public class OrderItem implements Serializable {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+
 	public Double getsubTotal() {
 		return price * quantity;
 	}

@@ -34,20 +34,19 @@ public class Order implements Serializable{
 	
 	private Integer orderStatus;
 	
-
 	@ManyToOne
+
 	@JoinColumn(name = "client_id")
 	private User client;
 	
 	@OneToMany(mappedBy = "id.order")
 
 	private Set<OrderItem> items = new HashSet<>();
-
+	
 	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
 	private Payment payment;
-
+	
 	public Order() {}
-
 
 	public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
 		super();
@@ -56,6 +55,7 @@ public class Order implements Serializable{
 		setOrderStatus(orderStatus);
 		this.client = client;
 	}
+	
 
 	public Long getId() {
 		return id;
@@ -77,14 +77,12 @@ public class Order implements Serializable{
 	}
 	
 	public OrderStatus getOrderStatus() {
-
 		return OrderStatus.valueOf(orderStatus);
 	}
 
 
 	public void setOrderStatus(OrderStatus orderStatus) {
 		if(orderStatus != null) {
-
 			this.orderStatus = orderStatus.getCode();
 		}
 	}
@@ -110,10 +108,8 @@ public class Order implements Serializable{
 	public Set<OrderItem> getItems(){
 		return items;
 	}
-	
-	//metodo q vai retornar a SOMA dos SUBTOTAIS dos ITENS de PEDIDO(ORDERITEM)
+
 	public Double getTotal() {
-		//pegando a SOMA DOS SUBTOTAIS dos ORDERITEM
 		double sum = 0.0;
 		for(OrderItem x : items) {
 			sum +=  x.getsubTotal();
@@ -121,7 +117,6 @@ public class Order implements Serializable{
 		return sum;
 	}
 	
-	//metodo HASH CODE e EQUALS para comparar OBJETOS/pedidos pelo ID
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -145,8 +140,5 @@ public class Order implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-	
-	
-	
+	}	
 }

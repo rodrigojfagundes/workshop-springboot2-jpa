@@ -23,11 +23,12 @@ public class Payment implements Serializable {
 	private Long id;
 	private Instant moment;
 	
+	
 	@JsonIgnore
 	@OneToOne
 	@MapsId
 	private Order order;
-
+	
 	public Payment() {
 	}
 
@@ -37,7 +38,8 @@ public class Payment implements Serializable {
 		this.moment = moment;
 		this.order = order;
 	}
-
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -62,7 +64,8 @@ public class Payment implements Serializable {
 		this.order = order;
 	}
 	
-
+	
+	//metodo hashcode equals para comparar valores
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -86,5 +89,9 @@ public class Payment implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}	
+	}
+	
+	
+	
+	
 }

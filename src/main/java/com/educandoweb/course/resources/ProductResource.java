@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.educandoweb.course.entities.Product;
 import com.educandoweb.course.services.ProductService;
 
+
 @RestController
 @RequestMapping(value = "/products")
 public class ProductResource {
@@ -21,11 +22,12 @@ public class ProductResource {
 
 	@GetMapping
 	public ResponseEntity<List<Product>> findAll(){		
+
 		List<Product> list = service.findAll();
-		
+
 		return ResponseEntity.ok().body(list);
 	}
-
+	
 	@GetMapping(value = "/{id}")
 
 	public ResponseEntity<Product> findById(@PathVariable Long id){
