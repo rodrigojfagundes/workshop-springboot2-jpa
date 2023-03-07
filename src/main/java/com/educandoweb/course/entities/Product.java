@@ -13,14 +13,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-	//criando a CLASSE PRODUCT
-//o @ENTITY e para dizer q vai ser CRIADO no BANCO uma TABELA com o MESMO NOME q a CLASSE
+
 @Entity
 
 @Table(name = "tb_product")
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,30 +27,18 @@ public class Product implements Serializable {
 	private String description;
 	private Double price;
 	private String imgUrl;
-	//
-	//
-	//
-	//fazendo associacao entre PRODUCT e CATEGORY
-		//1 PRODUTO tem VARIAS CATEGORIAS
-	//NAO vamos usar LIST, mas SIM um SET/CONJUNTO... Pois queremos garantir q
-	//um PRODUCT NAO vai estar 2 VEZES ou MAIS na mesma CATEGORY
-	
+
 	@ManyToMany
-	//
-	//no Annotation JOINTABLE nos vamos falar QUAL O NOME da TABELA...
-	//e o JOINCOLUMNS para falar e QUAIS vao ser as CHAVES ESTRANGEIRAS/(ID) q vamos 
-	//ASSOCIAR ENTRE A TABELA DE PRODUCT E CATEGORY
+
 	@JoinTable(name = "tb_product_category", 
 	joinColumns = @JoinColumn(name = "product_id"),
-	//o INVERSEJOINCOLUMN e para definirmos qual é a CHAVE ESTRANGEIRA(ID) da outra
-	//ENTIDADE/CLASSE/TABELA... no caso CATEGORY
+
 	inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<Category> categories = new HashSet<>();
 	
-
 	public Product() {}
 
-	
+
 	public Product(Long id, String name, String description, Double price, String imgUrl) {
 		super();
 		this.id = id;
@@ -62,9 +48,6 @@ public class Product implements Serializable {
 		this.imgUrl = imgUrl;
 	}
 	
-	
-	
-
 	public Long getId() {
 		return id;
 	}
@@ -120,6 +103,7 @@ public class Product implements Serializable {
 	}
 	
 	
+	//criando os metodos HASHCODE e EQUALS para fazer comparacoes
 	@Override
 	public int hashCode() {
 		final int prime = 31;

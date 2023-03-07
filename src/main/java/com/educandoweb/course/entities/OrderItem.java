@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.educandoweb.course.entities.pk.OrderItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 
@@ -15,8 +16,7 @@ public class OrderItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private OrderItemPK id;
-
+	private OrderItemPK id = new OrderItemPK();
 
 	private Integer quantity;
 	private Double price;
@@ -24,18 +24,16 @@ public class OrderItem implements Serializable {
 	public OrderItem() {
 	}
 
-
 	public OrderItem(Order order, Product product, Integer quantity, Double price) {
 		super();
 		id.setOrder(order);
-
 		id.setProduct(product);
 
 		this.quantity = quantity;
 		this.price = price;
 	}
 
-
+	@JsonIgnore
 	public Order getOrder() {
 		return id.getOrder();
 	}
@@ -44,11 +42,9 @@ public class OrderItem implements Serializable {
 		id.setOrder(order);
 	}
 
-
 	public Product getProduct() {
 		return id.getProduct();
 	}
-
 
 	public void setProduct(Product product) {
 		id.setProduct(product);
@@ -70,6 +66,7 @@ public class OrderItem implements Serializable {
 		this.price = price;
 	}
 
+	// metodo HASHCODE e EQUALS para comparar valores
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -94,4 +91,5 @@ public class OrderItem implements Serializable {
 			return false;
 		return true;
 	}
+
 }
