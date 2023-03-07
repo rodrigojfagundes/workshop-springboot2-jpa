@@ -18,23 +18,23 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.educandoweb.course.entities.User;
 import com.educandoweb.course.services.UserService;
 
-
 @RestController
+
 @RequestMapping(value = "/users")
 public class UserResource {
-
+	
 	@Autowired
 	private UserService service;
 	
 	@GetMapping
 	public ResponseEntity<List<User>> findAll(){		
-		List<User> list = service.findAll();
 
+		List<User> list = service.findAll();
+		
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-
 	public ResponseEntity<User> findById(@PathVariable Long id){
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
@@ -47,13 +47,14 @@ public class UserResource {
 				.buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 	}
-
+	
 	@DeleteMapping(value = "/{id}")
+
 	public ResponseEntity<Void> delete(@PathVariable Long id){
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-
+	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj){
 		obj = service.update(id, obj);
