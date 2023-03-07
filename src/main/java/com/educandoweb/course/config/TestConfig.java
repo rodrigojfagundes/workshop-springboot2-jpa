@@ -13,12 +13,11 @@ import com.educandoweb.course.repositories.UserRepository;
 @Configuration
 
 @Profile("test")
-
 public class TestConfig implements CommandLineRunner{
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Override
 	public void run(String... args) throws Exception {
 
@@ -27,7 +26,4 @@ public class TestConfig implements CommandLineRunner{
 
 		userRepository.saveAll(Arrays.asList(u1, u2));
 	}
-	
-	
-	
 }
