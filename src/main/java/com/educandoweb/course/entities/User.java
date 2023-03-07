@@ -19,12 +19,11 @@ public class User implements Serializable {
 	private String phone;
 	private String password;
 	
-	
+
 	public User() {	
 	}
 
-	
-	//metodo construtor... 
+ 
 	public User(Long id, String name, String email, String phone, String password) {
 		super();
 		this.id = id;
@@ -35,8 +34,6 @@ public class User implements Serializable {
 	}
 
 	
-	
-	//criando os metodos GET e SET... para modificar as VARIAVEIS/ATRIBUTOS
 	public Long getId() {
 		return id;
 	}
