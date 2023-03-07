@@ -8,21 +8,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-	//criando a CLASSE PRODUCT
-//o @ENTITY e para dizer q vai ser CRIADO no BANCO uma TABELA com o MESMO NOME q a CLASSE
-//no caso PRODUCT... Ou seja vai ser gerenciado pelo JPA
 @Entity
-//	o @TABLE e para dizer q VAMOS RENOMEAR a TABELA de PRODUCT para TB_PRODUCT
 @Table(name = "tb_product")
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-		//declarando os ATRIBUTOS/VARIAVEIS basicos...
-	//colocando o @ID para dizer q o ID e a chave primeria
-	//@GENERATEDVALUE IDENTITY... e para dizer q a chave é AUTOINCREMENT pelo BANCO
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -31,22 +27,30 @@ public class Product implements Serializable {
 	private Double price;
 	private String imgUrl;
 	//
+	//
+	//
 	//fazendo associacao entre PRODUCT e CATEGORY
 		//1 PRODUTO tem VARIAS CATEGORIAS
 	//NAO vamos usar LIST, mas SIM um SET/CONJUNTO... Pois queremos garantir q
 	//um PRODUCT NAO vai estar 2 VEZES ou MAIS na mesma CATEGORY
 	//
-	//ou seja estamos fazendo um SET/conjunto de CATEGORIES q vamos chamar de categories
-	//colocamos o NEW HASHSET para ela comecar NULLA, mas INSTANCIADA
-	//e colocamos o HASHSET, pois o SET é uma INTERFACE, e NAO pd ser INSTANCIADO
-	//mas o HASHSET pode
-		
-		//@TRANSCIENTE e PROVISORIO... impede o JPA de tentar interpretar
-	@Transient
+	//mapear as classes PRODUCT e CATEGORY para aparecer a tabela de associacao 
+	//aparece no BANCO.... A Associacao de MUITOS PRODUTOS para MUITAS CATEGORIAS, 
+	//e MUITAS CATEGORIAS para MUITOS PRODUTOS... Associacao MUITOS para MUITOS com 
+	//a JOINTABLE
+	@ManyToMany
+	//
+	//no Annotation JOINTABLE nos vamos falar QUAL O NOME da TABELA...
+	//e o JOINCOLUMNS para falar e QUAIS vao ser as CHAVES ESTRANGEIRAS/(ID) q vamos 
+	//ASSOCIAR ENTRE A TABELA DE PRODUCT E CATEGORY
+	@JoinTable(name = "tb_product_category", 
+	joinColumns = @JoinColumn(name = "product_id"),
+	//o INVERSEJOINCOLUMN e para definirmos qual é a CHAVE ESTRANGEIRA(ID) da outra
+	//ENTIDADE/CLASSE/TABELA... no caso CATEGORY
+	inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<Category> categories = new HashSet<>();
 	
-	
-	//criando o metodo construtor SEM argumentos
+
 	public Product() {}
 
 	
@@ -60,9 +64,6 @@ public class Product implements Serializable {
 		this.price = price;
 		this.imgUrl = imgUrl;
 	}
-	
-	
-	//criando os GET e SET
 
 	public Long getId() {
 		return id;

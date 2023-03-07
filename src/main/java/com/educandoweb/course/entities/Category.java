@@ -8,55 +8,36 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
-//classe categoria
-//o @ENTITY e para dizer q vai ser CRIADO no BANCO uma TABELA com o MESMO NOME q a CLASSE
-//no caso CATEGORY... Ou seja vai ser gerenciado pelo JPA
 @Entity
-//	o @TABLE e para dizer q VAMOS RENOMEAR a TABELA de CATEGORY para TB_CATEGORY
 @Table(name = "tb_category")
 public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-		//declarando as VARIAVEIS/ATRIBUTOS basicos...
-	//colocando o @ID para dizer q o ID e a chave primeria
-	//@GENERATEDVALUE IDENTITY... e para dizer q a chave é AUTOINCREMENT pelo BANCO
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	
-	
-	//fazendo associacao entre CATEGORY e PRODUCT
-			//1 CATEGORIA pd ter VARIOS PRODUTOS
-		//NAO vamos usar LIST, mas SIM um SET/CONJUNTO... Pois queremos garantir q
-		//um CATEGORY NAO vai estar 2 VEZES ou MAIS na mesmo PRODUCT
-		//
-		//ou seja estamos fazendo um SET/conjunto de PRODUCT q vamos chamar de products
-		//colocamos o NEW HASHSET para ela comecar NULLA, mas INSTANCIADA
-		//e colocamos o HASHSET, pois o SET é uma INTERFACE, e NAO pd ser INSTANCIADO
-		//mas o HASHSET pode
-		//
-	//@TRANSCIENTE e PROVISORIO... impede o JPA de tentar interpretar
-	@Transient
+
+	@JsonIgnore
+	@ManyToMany(mappedBy = "categories")
 	private Set<Product> products = new HashSet<>();
 	
-	//declarando o construtor vazio
 	public Category() {}
 	
-	
-	//declarando o construtor com argumentos
+
 	public Category(Long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
 	}
 	
-	
-	//criando os metodos GET e SET
+
 	public Long getId() {
 		return id;
 	}
