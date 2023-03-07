@@ -13,7 +13,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+	//criando a CLASSE PRODUCT
+//o @ENTITY e para dizer q vai ser CRIADO no BANCO uma TABELA com o MESMO NOME q a CLASSE
 @Entity
+
 @Table(name = "tb_product")
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -33,11 +36,7 @@ public class Product implements Serializable {
 		//1 PRODUTO tem VARIAS CATEGORIAS
 	//NAO vamos usar LIST, mas SIM um SET/CONJUNTO... Pois queremos garantir q
 	//um PRODUCT NAO vai estar 2 VEZES ou MAIS na mesma CATEGORY
-	//
-	//mapear as classes PRODUCT e CATEGORY para aparecer a tabela de associacao 
-	//aparece no BANCO.... A Associacao de MUITOS PRODUTOS para MUITAS CATEGORIAS, 
-	//e MUITAS CATEGORIAS para MUITOS PRODUTOS... Associacao MUITOS para MUITOS com 
-	//a JOINTABLE
+	
 	@ManyToMany
 	//
 	//no Annotation JOINTABLE nos vamos falar QUAL O NOME da TABELA...
@@ -54,8 +53,6 @@ public class Product implements Serializable {
 	public Product() {}
 
 	
-	//declarando o metodo CONSTRUTOR COM OS ARGUENTOS/variaveis/atributos
-	//	MENOS a COLECAO CATEGORIES... Pois o CATEGORIES ja foi INSTANCIADO ali em cima :)
 	public Product(Long id, String name, String description, Double price, String imgUrl) {
 		super();
 		this.id = id;
@@ -64,6 +61,9 @@ public class Product implements Serializable {
 		this.price = price;
 		this.imgUrl = imgUrl;
 	}
+	
+	
+	
 
 	public Long getId() {
 		return id;
@@ -120,7 +120,6 @@ public class Product implements Serializable {
 	}
 	
 	
-	//criando os metodos HASHCODE e EQUALS para fazer comparacoes
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -146,5 +145,4 @@ public class Product implements Serializable {
 			return false;
 		return true;
 	}
-
 }

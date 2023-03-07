@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.educandoweb.course.entities.User;
 import com.educandoweb.course.services.UserService;
 
+
 @RestController
 
 @RequestMapping(value = "/users")
@@ -20,19 +21,18 @@ public class UserResource {
 	@Autowired
 	private UserService service;
 	
-	//metodo FINDALL do tipo ResponseEntity que é um ENDPOINT para acessar os usuarios... 
-	 //esse  METODO ResponseEntity, VAI RETORNAR um VALOR do tipo LIST de USER
-			//o GETMAPPING e para dizer q responde a REQUISICAO GET DE HTTP
 	@GetMapping
-	public ResponseEntity<List<User>> findAll(){
+	public ResponseEntity<List<User>> findAll(){		
+
 		List<User> list = service.findAll();
+
 		return ResponseEntity.ok().body(list);
 	}
 	
-
 	@GetMapping(value = "/{id}")
+
 	public ResponseEntity<User> findById(@PathVariable Long id){
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
-	}
+	}	
 }

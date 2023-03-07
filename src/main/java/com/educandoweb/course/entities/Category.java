@@ -13,31 +13,48 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Entity
+
 @Table(name = "tb_category")
 public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-
+	
+	
+	//fazendo associacao entre CATEGORY e PRODUCT
+			//1 CATEGORIA pd ter VARIOS PRODUTOS
+		//NAO vamos usar LIST, mas SIM um SET/CONJUNTO... Pois queremos garantir q
+		//um CATEGORY NAO vai estar 2 VEZES ou MAIS na mesmo PRODUCT
+		//
+		//ou seja estamos fazendo um SET/conjunto de PRODUCT q vamos chamar de products
+		//colocamos o NEW HASHSET para ela comecar NULLA, mas INSTANCIADA
+		//e colocamos o HASHSET, pois o SET é uma INTERFACE, e NAO pd ser INSTANCIADO
+		//mas o HASHSET pode
+		//
+	//colocando uma REFERENCIA para o MAPEAMENTO q fizemos na class PRODUCT
+		//no MAPPEDBY nos colocamos o NOME da COLECAO q temos na outra CLASS (classe
+		//PRODUCT) e o nome da COLECAO q vamos fazer REFERENCIA e CATEGORIES
+		//pois esse e o NOME DO SET/COLECAO q ta em PRODUCT
+			//JsonIgnore e para nao dar loop
 	@JsonIgnore
 	@ManyToMany(mappedBy = "categories")
 	private Set<Product> products = new HashSet<>();
 	
 	public Category() {}
 	
-
+	
 	public Category(Long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
 	}
 	
-
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -61,7 +78,7 @@ public class Category implements Serializable {
 		return products;
 	}
 	
-	//declarando o construtor com argumentos
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -87,9 +104,4 @@ public class Category implements Serializable {
 			return false;
 		return true;
 	}
-
-
-
-
-	
 }
