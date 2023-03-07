@@ -5,8 +5,6 @@ import java.time.Instant;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-//classe q vai dar um retorno em JSON do error, com o momento, mensagem, status
-//etc... do error, e implementa a interfae SERIALIZABLE
 public class StandardError implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -21,8 +19,7 @@ public class StandardError implements Serializable{
 	public StandardError() {
 		
 	}
-	
-	//metodo construtor com os argumentos
+
 	public StandardError(Instant timestamp, Integer status, String error, String message, String path) {
 		super();
 		this.timestamp = timestamp;
@@ -32,7 +29,6 @@ public class StandardError implements Serializable{
 		this.path = path;
 	}
 	
-	//criando os GET e SET
 	public Instant getTimestamp() {
 		return timestamp;
 	}
@@ -71,8 +67,5 @@ public class StandardError implements Serializable{
 
 	public void setPath(String path) {
 		this.path = path;
-	}
-	
-	
-	
+	}	
 }
