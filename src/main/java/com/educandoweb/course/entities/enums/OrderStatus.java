@@ -1,6 +1,5 @@
 package com.educandoweb.course.entities.enums;
 
-
 public enum OrderStatus {
 	
 	WAITING_PAYMENT(1),
@@ -25,7 +24,6 @@ public enum OrderStatus {
 				return value;
 			}
 		}
-
 		throw new IllegalArgumentException("Invalid OrderStatus code");
 	}
 }

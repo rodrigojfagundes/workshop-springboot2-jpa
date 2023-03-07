@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+
 @Table(name = "tb_payment")
 public class Payment implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -39,7 +40,6 @@ public class Payment implements Serializable {
 		this.order = order;
 	}
 	
-	
 	public Long getId() {
 		return id;
 	}
@@ -64,8 +64,7 @@ public class Payment implements Serializable {
 		this.order = order;
 	}
 	
-	
-	//metodo hashcode equals para comparar valores
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -89,9 +88,5 @@ public class Payment implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-	
-	
-	
-	
+	}	
 }
