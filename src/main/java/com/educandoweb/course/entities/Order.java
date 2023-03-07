@@ -15,21 +15,22 @@ import com.educandoweb.course.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
+
 @Table(name = "tb_order")
 public class Order implements Serializable{
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
-	
+
 	private Integer orderStatus;
-	
 
 	@ManyToOne
+
 	@JoinColumn(name = "client_id")
 	private User client;
 
@@ -43,7 +44,7 @@ public class Order implements Serializable{
 		setOrderStatus(orderStatus);
 		this.client = client;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -64,6 +65,7 @@ public class Order implements Serializable{
 	}
 	
 	public OrderStatus getOrderStatus() {
+
 		return OrderStatus.valueOf(orderStatus);
 	}
 
@@ -83,6 +85,7 @@ public class Order implements Serializable{
 	public void setClient(User client) {
 		this.client = client;
 	}
+	
 	
 	@Override
 	public int hashCode() {
