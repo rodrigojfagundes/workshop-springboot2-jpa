@@ -11,20 +11,28 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity
+import com.fasterxml.jackson.annotation.JsonFormat;
 
+//criando a nossa CLASSE/ENTIDADE PEDIDOS/ORDER
+@Entity
 @Table(name = "tb_order")
 public class Order implements Serializable{
 	private static final long serialVersionUID = 1L;
 
+	//implementando os ATRIBUTOS/VARIAVEIS basicas... do PEDIDO
+	//colocando o @ID para dizer q o ID e a chave primeria
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
-
+	
+		//declarando uma VARIAVEL CLIENT do tipo USER... Para sabermos qual é o 
+		//USUARIO/CLIENTE q esta fazendo o PEDIDO
+	//colocando a ANNOTATION MANYTOONE... Pois é MUITOS (ORDER/PEDIDO) para UM CLIENTE/USER
 	@ManyToOne
-
+	//Annotation JoinColumn recebe a CHAVE ESTRANGEIRA q tera no BANCO q é o ID do cliente
+	//q fez o PEDIDO
 	@JoinColumn(name = "client_id")
 	private User client;
 	
@@ -39,7 +47,6 @@ public class Order implements Serializable{
 		this.client = client;
 	}
 	
-
 	public Long getId() {
 		return id;
 	}
@@ -69,6 +76,7 @@ public class Order implements Serializable{
 		this.client = client;
 	}
 
+	
 
 	@Override
 	public int hashCode() {
