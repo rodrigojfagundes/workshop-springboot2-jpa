@@ -23,7 +23,6 @@ import com.educandoweb.course.services.CategoryService;
 @RequestMapping(value = "/categories")
 public class CategoryResource {
 	
-	//criando uma DEPEDENCIA para a CLASSE CATEGORYSERVICE, q vamos chamar de SERVICE
 	@Autowired
 	private CategoryService service;
 	
@@ -32,29 +31,24 @@ public class CategoryResource {
 			//o GETMAPPING e para dizer q responde a REQUISICAO GET DE HTTP
 	@GetMapping
 	public ResponseEntity<List<Category>> findAll(){		
-		//declarando uma LISTA de CATEGORIA, q RECEBE o SERVICO do nosso FINDALL
-		//e ESSA LISTA vai receber o OBJETO SERVICE(q é do tipo CATEGORYSERVICE) e vamos chamar
-		//o metodo q ela tem q é o FINDALL... Para pegar os CATEGORY
 		List<Category> list = service.findAll();
 		
-		//retornando... o RESPONSE ENTITY OK. e no CORPO/BODY passando a LISTA q criamos ali
-		//em cima
 		return ResponseEntity.ok().body(list);
 	}
 	
-	//criando um ENDPOIT/METODO para Buscar o Usuario por ID
+	//criando um ENDPOIT/METODO para Buscar o CATEGORY por ID
 		//o @GETMAPPING e por causa q vai ser para uma REQUISICAO do tipo GET
-		//e o VALUE e para dizer q na URL no navegador vai ter o ID do usuario q quermos
+		//e o VALUE e para dizer q na URL no navegador vai ter o ID da categoria q quermos
 	@GetMapping(value = "/{id}")
-	//criando o METODO FINDBYID... do tipo RESPONSEENTITY q vai RETORNAR um USER
+	
+	//criando o METODO FINDBYID... do tipo RESPONSEENTITY q vai RETORNAR um CATEGORY
 	//esse metodo FINDBYID vai receber o ID em formato de LONG ID
-		//o @PathVariable é uma ANNOTATION do Spring
 	public ResponseEntity<Category> findById(@PathVariable Long id){
-		//criando uma VARIAVEL OBJ do TIPO USER q recebe o METODO FINDBYID q ta no
+		//criando uma VARIAVEL OBJ do TIPO CATEGORY q recebe o METODO FINDBYID q ta no
 		//JPA que é HERDADO pelo OBJETO SERVICE que é um OBJETO do tipo CategoryService(declarado
 		//ali em cima)
 		Category obj = service.findById(id);
-		//retornando o OBJETO/USUARIO encontrado pelo o ID :)
+		//retornando o OBJETO/CATEGORIA encontrado pelo o ID :)
 		return ResponseEntity.ok().body(obj);
 		
 	}

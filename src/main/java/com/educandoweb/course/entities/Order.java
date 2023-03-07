@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,66 +13,43 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.educandoweb.course.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-//criando a nossa CLASSE/ENTIDADE PEDIDOS/ORDER
-	//EU ACHO Q O @ENTITY diz q vai ser CRIADO UMA TABLE NO BANCO COM O MESMO NOME Q A CLASS
-	//NO CASO ORDER... mas nas proximas linha a gente modifica para TB_ORDER para
-	//nao dar conflito com a palavra ORDER reservada do BANCO
+
 @Entity
-//para tabela ORDER nao dar CONFLITO com a palavra RESERVADA ORDER do BANCO, vamos modificar
-//para tb_order
+
 @Table(name = "tb_order")
 public class Order implements Serializable{
 	private static final long serialVersionUID = 1L;
 
-	
-	//implementando os ATRIBUTOS/VARIAVEIS basicas... do PEDIDO
-	//colocando o @ID para dizer q o ID e a chave primeria
-	//@GENERATEDVALUE IDENTITY... e para dizer q a chave é AUTOINCREMENT pelo BANCO
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-		//momento em q foi pedido
-			//@JsonFormat e para a data ficar no formato 8601 (dia, mes, ano...)
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
-	
-	//criando uma VARIAVEL ORDERSTATUS do tipo INTEGER... Q vai receber um valor
-	//numerico e sera passado para a CLASS ORDERSTATUS
-		//é INTEGER pois na TABELA ORDER no BANCO vai ser do tipo INTEGER a coluna
-		//ORDERSTATUS
+
 	private Integer orderStatus;
 	
-		//declarando uma VARIAVEL CLIENT do tipo USER... Para sabermos qual é o 
-		//USUARIO/CLIENTE q esta fazendo o PEDIDO
-	//colocando a ANNOTATION MANYTOONE... Pois é MUITOS (ORDER/PEDIDO) para UM CLIENTE/USER
 	@ManyToOne
-	//Annotation JoinColumn recebe a CHAVE ESTRANGEIRA q tera no BANCO q é o ID do cliente
-	//q fez o PEDIDO
+
 	@JoinColumn(name = "client_id")
 	private User client;
 	
-	
-	//chamando o ANNOTATION OneToMany/Um para Muitos
-	//e nele nos vamos chamar o ID(que é um OBJETO do tipo ORDERITEMPK) 
-	//e esta declarado dentro da CLASSE ORDERITEM e nele chamamos o ORDER
 	@OneToMany(mappedBy = "id.order")
-	//criando uma COLECAO/SET do TIPO ORDERITEM chamada de ITEMS, e iniciando com
-	//um NEW HASHSET, pois o SET é uma INTERFACE e o HASHSET é a CLASSE q
-	//implementa esse INTERFACE
+
 	private Set<OrderItem> items = new HashSet<>();
 	
-	
-	
-	//criando o construtor sem argumentos
+	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+	private Payment payment;
+
 	public Order() {}
 
 	
-	//criando o metodo construtor com argumentos
 	public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
 		super();
 		this.id = id;
@@ -79,8 +57,7 @@ public class Order implements Serializable{
 		setOrderStatus(orderStatus);
 		this.client = client;
 	}
-	
-	//criando os GET e SET para podermos VER e ALTERAR os valores dos ATRIBUTOS/VARIAVEIS
+
 	public Long getId() {
 		return id;
 	}
@@ -101,17 +78,12 @@ public class Order implements Serializable{
 	}
 	
 	public OrderStatus getOrderStatus() {
-		//chamando o METODO VALUEOF q ta no ENUM/CLASS ORDERSTATUS... E esse metodo
-		//VALUEOF vai transformar o NUMERO(INTEGER) q ta na VAR ORDERSTATUS e vamos
-		//converter ELE para um VALOR em ORDERSTATUS
 		return OrderStatus.valueOf(orderStatus);
 	}
 
 
 	public void setOrderStatus(OrderStatus orderStatus) {
 		if(orderStatus != null) {
-		//aqui nos vamos RECEBER um valor em ORDERSTATUS, e temos q guardar ele
-		//em formato de NUMERO INTEIRO
 			this.orderStatus = orderStatus.getCode();
 		}
 	}
@@ -125,14 +97,19 @@ public class Order implements Serializable{
 	public void setClient(User client) {
 		this.client = client;
 	}
-	
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+
 	public Set<OrderItem> getItems(){
 		return items;
 	}
 	
-	
-	
-	//metodo HASH CODE e EQUALS para comparar OBJETOS/pedidos pelo ID
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -157,7 +134,4 @@ public class Order implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
 }

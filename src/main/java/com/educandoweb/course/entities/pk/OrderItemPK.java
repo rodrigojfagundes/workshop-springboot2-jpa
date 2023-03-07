@@ -11,17 +11,11 @@ import com.educandoweb.course.entities.Product;
 
 //Classe AUXILIAR ORDERITEMPK q é a CHAVE PRIMARIA do ITEM DE PEDIDO, essa classe vai
 //ter uma referencia para a CLASSE PEDIDO e PRODUTO
-	//colocando o EMBEDDABLE para virar um ANNOTATION do JPA
 @Embeddable
 public class OrderItemPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	//criando um ATRIBUTO order do tipo Order e um ATRIBUTO product do tipo PRODUCT
-	//
-	//
-	//declarando q o ORDER vai ser MUITOS para UM (mtos pedido para 1 produto)
-	//com o ManyToOne...		E o JOINCOLUMN e para dizer qual vai ser o NOME DA
-	//CHAVE ESTRANGEIRA no BANCO
+
 	@ManyToOne
 	@JoinColumn(name = "order_id")
 	private Order order;
@@ -32,8 +26,6 @@ public class OrderItemPK implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
-	
-	//declarando os GET e SET
 	
 
 	public Order getOrder() {
@@ -79,8 +71,5 @@ public class OrderItemPK implements Serializable {
 		} else if (!product.equals(other.product))
 			return false;
 		return true;
-	}
-	
-	
-	
+	}	
 }
