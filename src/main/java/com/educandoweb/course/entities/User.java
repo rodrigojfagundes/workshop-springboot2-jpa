@@ -2,25 +2,29 @@ package com.educandoweb.course.entities;
 
 import java.io.Serializable;
 
-//criando a CLASSE/entidade USER... com a INTERFACE SERIALIZABLE... Q serve para transformar
-//OBJETOS em CADEIA de BYTES... Isso serve para trafegar DADOS na rede...
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	//implementando os ATRIBUTOS/VARIAVEIS basicas... do USUARIO
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String email;
 	private String phone;
 	private String password;
-	
-	
-	//metodo construtor vazio
+
+
 	public User() {	
 	}
 
-	
-	//metodo construtor... 
+
 	public User(Long id, String name, String email, String phone, String password) {
 		super();
 		this.id = id;
@@ -31,8 +35,6 @@ public class User implements Serializable {
 	}
 
 	
-	
-	//criando os metodos GET e SET... para modificar as VARIAVEIS/ATRIBUTOS
 	public Long getId() {
 		return id;
 	}
@@ -84,6 +86,8 @@ public class User implements Serializable {
 
 
 	
+	
+	//metodo HASHCODE EQUALS... para COMPARAR o valor de ITENS...
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -91,8 +95,7 @@ public class User implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
-
+	//esse metodo trabalha JUNTO com o HASHCODE ali de cima	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -108,5 +111,10 @@ public class User implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}	
+	}
+	
+	
+	
+	
+	
 }
